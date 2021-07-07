@@ -1,12 +1,10 @@
 flask
 gunicorn
-tensorflow-cpu==2.4.0
+tensorflow-cpu
 traceback2
 pandas
 click
 itsdangerous
 Jinja2
 MarkupSafe
-itsdangerous
-Jinja2
 Werkzeug
