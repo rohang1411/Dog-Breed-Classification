@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+# from flask.templating import render_template_string
 from werkzeug.utils import secure_filename
 import pandas as pd
 import numpy as np
@@ -57,7 +58,7 @@ def predict():
         filename = os.path.join(f.filename)
         f.save(filename)
         img = cv.imread(filename)
-        print(img)
+        # print(img)
         if type(img) == type(None):
             result = ' Invalid Image \n Image Shape = ' + str(img)
         else:
@@ -66,8 +67,9 @@ def predict():
             model = load_model('dogbreedmodelresnet50.h5')
             breedDetected = breeds[np.argmax(model.predict(img))]
             prediction = str(model.predict(img))
-            result = 'Breed Detected = ' + breedDetected + '\n' + 'Prediction = ' + prediction
-    return result
+            accuracy = str(np.amax((model.predict(img))))
+            result = 'Breed Detected = ' + breedDetected + '<br>' + 'Accuracy = ' + accuracy + '<br>' + 'Prediction = ' + prediction
+    return render_template('index.html', result = result)
 		
 if __name__ == '__main__':
     app.run(debug = True)
